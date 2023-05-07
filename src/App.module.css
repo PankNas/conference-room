@@ -1,0 +1,47 @@
+.root {
+  width: 800px;
+  min-height: 400px;
+  padding: 50px;
+  border-radius: 10px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /*box-shadow: -5px -5px 5px rgba(255,255,255,0.5),*/
+  /*10px 10px 15px rgba(70,70,70,0.12);*/
+
+  background-color: #F5F5F5 !important;
+
+  /*color: #4361ee;*/
+}
+
+.title {
+  text-align: center !important;
+  font-weight: bold !important;
+  margin-bottom: 30px !important;
+  /*color: #4361ee;*/
+  /*font-weight: normal;*/
+}
+
+.fieldsBoxLine {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin-bottom: 25px;
+}
+
+.inputDateTime {
+  width: calc(100% / 3 - 30px);
+
+  box-sizing: border-box;
+  height: 48px;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: center;
+}
