@@ -4,6 +4,7 @@ import SelectBox from "./components/SelectBox";
 import InputItem from "./components/InputItem";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {checkBooking, checkValidDateTime} from "./utils/validators";
 
 const towers = ['А', 'Б'];
 const floors = Array.from({length: 25}, (_, index) => index + 3);
@@ -19,16 +20,39 @@ const defaultData = {
   comment: '',
 };
 
+const booking = [];
+
 function App() {
   const [dataForm, setDataForm] = useState(defaultData);
 
-  const handleChangeData = (event) => setDataForm({...dataForm, [event.target.id]: event.target.value});
+  const handleChangeData = (event) => {
+    if (!event.target.id) {
+      setDataForm({...dataForm, [event.target.name]: event.target.value});
+      return;
+    }
+
+    setDataForm({...dataForm, [event.target.id]: event.target.value});
+  };
 
   const handleClean = () => setDataForm(defaultData);
   const handleSend = (event) => {
     event.preventDefault();
 
-    console.log(dataForm);
+    if (!checkValidDateTime(dataForm.date, dataForm.timeStart, dataForm.timeEnd)) {
+      alert('Не все данные формы были правильно заполнены! ' +
+        'Проверьте правильность заполнения даты и времени. ' +
+        'Бронирование доступно от текущих дня и времени.');
+      return;
+    }
+
+    if (checkBooking(dataForm, booking)) {
+      alert('Извините. Выбранная переговорная занята в этот промежуток времени :(');
+      return;
+    }
+
+    booking.push(dataForm);
+    console.log(JSON.stringify(dataForm));
+    alert('Бронирование переговорной прошло успешно!');
   };
 
   return (
@@ -73,12 +97,14 @@ function App() {
           <InputItem
             id={'timeStart'}
             mask={"99:99"}
+            label={'Время'}
             value={dataForm.timeStart}
             onChange={handleChangeData}
           />
           до
           <InputItem
             id={'timeEnd'}
+            label={'Время'}
             mask={"99:99"}
             value={dataForm.timeEnd}
             onChange={handleChangeData}

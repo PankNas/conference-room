@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import styles from './style.css';
 
 const InputItem = ({id, mask, label, value, onChange}) => {
-  const textField = () => <TextField label={label} variant={'standard'}/>;
+  const textField = () => <TextField id={id} label={label} className={styles.itemForm} required/>;
 
   return (
     <InputMask
@@ -13,7 +13,7 @@ const InputItem = ({id, mask, label, value, onChange}) => {
       maskChar="_"
       onChange={onChange}
     >
-      {() => <TextField id={id} label={label} className={styles.itemForm} required/>}
+      {textField}
     </InputMask>
   )
 };
