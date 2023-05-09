@@ -1,6 +1,10 @@
 const moment = require("moment");
 
 export const checkValidDateTime = (date, time1, time2) => {
+  const checkFullRecord = (x) => x.includes('_');
+
+  if (checkFullRecord(date) || checkFullRecord(time1) || checkFullRecord(time2)) return false;
+
   const myDate1 = moment(`${date} ${time1}`, 'DD.MM.YYYY HH:mm');
   const myDate2 = moment(`${date} ${time2}`, 'DD.MM.YYYY HH:mm');
 
@@ -10,7 +14,7 @@ export const checkValidDateTime = (date, time1, time2) => {
 };
 
 const checkTime = (time1, time2) => {
-  const [timeEarly, timeLater] = time1[0] > time2[1] ? [time1, time2] : [time2, time1];
+  const [timeEarly, timeLater] = time1[0] < time2[1] ? [time1, time2] : [time2, time1];
 
   const compareTime = (time) => timeEarly[0] <= time && time <= timeEarly[1];
 
